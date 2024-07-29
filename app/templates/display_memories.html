@@ -10,17 +10,25 @@
             <div class="col-12 d-flex justify-content-center mb-4">
                 <a class="btn btn-lg" 
                    style="background-color: #a45f24; border-color: #a45f24; color: #ffffff; font-size: 1.25rem; padding: 0.75rem 1.5rem;" 
-                   href="{{ url_for('main.add_image_or_video', section_id=section_id) }}">
+                   href="{{ url_for('main.add_image_or_video') }}">
                    Add Photo or Video
                 </a>
             </div>
         {% endif %}
         {% for memory in memories %}
-        <div class="col-md-4">
-            <div class="card mb-4">
+        <div class="col-md-4 mb-4">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{ memory.file_type }}</h5>
-                    <!-- Puedes añadir más campos de la memoria aquí -->
+                    <!-- Mostrar la imagen o el video según el tipo de archivo -->
+                    {% if memory.file_type == 'image' %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ memory.file_name) }}" class="img-fluid" alt="Image">
+                    {% elif memory.file_type == 'video' %}
+                        <video controls class="w-100">
+                            <source src="{{ url_for('static', filename='uploads/' ~ memory.file_name) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
                 </div>
             </div>
         </div>

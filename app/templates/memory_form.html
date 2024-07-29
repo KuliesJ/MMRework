@@ -8,11 +8,21 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <form method="POST" enctype="multipart/form-data" class="card shadow-sm p-4">
-                    <input type="hidden" name="section_id" value="{{ section_id }}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title:</label>
+                        <input type="text" id="title" name="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="section" class="form-label">Section:</label>
+                        <select id="section" name="section_id" class="form-control" required>
+                            {% for section in sections %}
+                                <option value="{{ section.id }}">{{ section.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div id="image-field" class="content-field mb-3">
                         <label for="image" class="form-label">Image or Video:</label>
-                        <input type="file" id="image" name="image" class="form-control" 
-                               accept="image/jpeg, image/png, video/mp4">
+                        <input type="file" id="image" name="image" class="form-control" accept="image/jpeg, image/png, video/mp4" required>
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Publish</button>
