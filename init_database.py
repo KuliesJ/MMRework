@@ -38,13 +38,6 @@ def init_database():
         db.session.add(section2)
         db.session.commit()
 
-        # Agregar memorias de ejemplo
-        memory1 = Memory(fileType='image', section_id=section1.id)
-        memory2 = Memory(fileType='video', section_id=section2.id)
-
-        db.session.add(memory1)
-        db.session.add(memory2)
-        db.session.commit()
 
     print("Database initialized and data added.")
 

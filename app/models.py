@@ -40,5 +40,6 @@ class MemorySection(db.Model):
 
 class Memory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fileType = db.Column(db.String(150))
-    section_id = db.Column(db.Integer, db.ForeignKey('memory_section.id'), nullable=False)  # Relación con MemorySection
+    file_name = db.Column(db.String(120))
+    file_type = db.Column(db.String(10))
+    section_id = db.Column(db.Integer, db.ForeignKey('memory_section.id'))  # Relación con MemorySection

@@ -10,7 +10,7 @@
             <div class="col-12 d-flex justify-content-center mb-4">
                 <a class="btn btn-lg" 
                    style="background-color: #a45f24; border-color: #a45f24; color: #ffffff; font-size: 1.25rem; padding: 0.75rem 1.5rem;" 
-                   href="{{ url_for('main.addImageOrVideo') }}">
+                   href="{{ url_for('main.add_image_or_video', section_id=section_id) }}">
                    Add Photo or Video
                 </a>
             </div>
@@ -19,7 +19,7 @@
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">{{ memory.fileType }}</h5>
+                    <h5 class="card-title">{{ memory.file_type }}</h5>
                     <!-- Puedes añadir más campos de la memoria aquí -->
                 </div>
             </div>

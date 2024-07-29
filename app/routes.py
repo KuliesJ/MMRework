@@ -46,6 +46,7 @@ def photoVideos():
 @main.route('/photos_videos/<int:section_id>')
 def photos_videos_section(section_id):
     memories = Memory.query.filter_by(section_id=section_id).all()
+    print(memories)
     return render_template("display_memories.html", title="Photos and Videos", memories=memories)
 
 @main.route('/terms_and_conditions')
@@ -126,10 +127,43 @@ def addSection():
 
     return render_template('section_form.html')
 
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'mp4'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @main.route('/add_image_or_video', methods=['GET', 'POST'])
-@login_required
-def addImageOrVideo():
-    return render_template('memory_form.html')
+def add_image_or_video():
+    if request.method == 'POST':
+        file = request.files.get('image')
+        section_id = request.form.get('section_id')
+        
+        if not section_id:
+            flash('Section ID is required.')
+            return redirect(url_for('main.add_image_or_video'))
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+            
+            # Determinar el tipo de archivo
+            file_type = 'image' if filename.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'} else 'video'
+            
+            # Crear una nueva entrada en la base de datos
+            new_memory = Memory(file_name=filename, file_type=file_type, section_id=section_id)
+            db.session.add(new_memory)
+            db.session.commit()
+            
+            flash('File uploaded successfully!')
+            return redirect(url_for('main.add_image_or_video'))
+        else:
+            flash('Invalid file format. Only JPG, JPEG, PNG, and MP4 files are allowed.')
+    
+    # Obtener todas las secciones para mostrar en el formulario
+    sections = MemorySection.query.all()
+    return render_template('memory_form.html', sections=sections)
 
 # SESSION MANAGERS
 

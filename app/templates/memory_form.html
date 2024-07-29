@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Create Block{% endblock %}
+{% block title %}Add Image or Video{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1 class="my-4">Create a New Block</h1>
+        <h1 class="my-4">Add Image or Video</h1>
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <form method="POST" enctype="multipart/form-data" class="card shadow-sm p-4">
+                    <input type="hidden" name="section_id" value="{{ section_id }}">
                     
                     <div id="image-field" class="content-field mb-3">
                         <label for="image" class="form-label">Image or Video:</label>
@@ -24,19 +25,4 @@
             </div>
         </div>
     </div>
-    
-    <script>
-        function showContentField(contentType) {
-            document.querySelectorAll('.content-field').forEach(field => field.style.display = 'none');
-            if (contentType === 'title') {
-                document.getElementById('title-field').style.display = 'block';
-            } else if (contentType === 'subtitle') {
-                document.getElementById('subtitle-field').style.display = 'block';
-            } else if (contentType === 'paragraph') {
-                document.getElementById('paragraph-field').style.display = 'block';
-            } else if (contentType === 'image') {
-                document.getElementById('image-field').style.display = 'block';
-            }
-        }
-    </script>
 {% endblock %}
