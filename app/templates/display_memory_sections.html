@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4 text-center">{{ title }}</h1>
+    <div class="row">
+        {% if current_user.is_authenticated %}
+            <div class="col-12 d-flex justify-content-center mb-4">
+                <a class="btn btn-lg" 
+                   style="background-color: #a45f24; border-color: #a45f24; color: #ffffff; font-size: 1.25rem; padding: 0.75rem 1.5rem;" 
+                   href="{{ url_for('main.addSection') }}">
+                   Add Section
+                </a>
+            </div>
+        {% endif %}
+        
+        <!-- Estilo para las secciones en tarjeta -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="list-group">
+                        <h1 class="text-center">Available photos and videos</h1>
+                        <br>
+                        {% for section in memory_sections %}
+                            <a href="{{ url_for('main.photos_videos_section', section_id=section.id) }}" 
+                               class="btn list-group-item list-group-item-action text-center mb-3" 
+                               style="background-color: #a45f24; border-color: #a45f24; color: #ffffff; font-size: 1.25rem; padding: 0.75rem 1.5rem;">
+                               {{ section.sectionName }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">{{ title }}</h1>
+    <div class="row">
+        {% if current_user.is_authenticated %}
+            <div class="col-12 d-flex justify-content-center mb-4">
+                <a class="btn btn-lg" 
+                   style="background-color: #a45f24; border-color: #a45f24; color: #ffffff; font-size: 1.25rem; padding: 0.75rem 1.5rem;" 
+                   href="{{ url_for('main.addImageOrVideo') }}">
+                   Add Photo or Video
+                </a>
+            </div>
+        {% endif %}
+        {% for memory in memories %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ memory.fileType }}</h5>
+                    <!-- Puedes añadir más campos de la memoria aquí -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
