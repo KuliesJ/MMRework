@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="my-4">Edit Post</h1>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form method="POST" action="{{ url_for('main.edit_posts') }}" enctype="multipart/form-data" class="card shadow-sm p-4">
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title:</label>
+                        <input type="text" id="title" name="title" class="form-control" value="{{ post.title }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="subtitle" class="form-label">Subtitle:</label>
+                        <input type="text" id="subtitle" name="subtitle" class="form-control" value="{{ post.subtitle }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content:</label>
+                        <textarea id="content" name="content" class="form-control" rows="6">{{ post.content }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image:</label>
+                        {% if post.image %}
+                        <img src="{{ url_for('static', filename=post.image.split('static/')[1]) }}" alt="Current Image" class="img-fluid mb-3">
+                        {% endif %}
+                        <input type="file" id="image" name="image" class="form-control">
+                    </div>
+                    
+                    <button type="submit" name="action" value="save" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -14,13 +14,10 @@ def init_database():
         db.session.query(User).delete()
 
         # Agregar usuarios de ejemplo
-        user1 = User(email='user1@example.com')
-        user1.set_password('password')
-        user2 = User(email='user2@example.com')
-        user2.set_password('password')
+        user1 = User(email='renatos@nder.us')
+        user1.set_password('medicalmissionstoperu')
 
         db.session.add(user1)
-        db.session.add(user2)
         db.session.commit()
 
         # Agregar posts de ejemplo con user_id

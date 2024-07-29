@@ -19,7 +19,7 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ memory.file_type }}</h5>
+                    
                     <!-- Mostrar la imagen o el video según el tipo de archivo -->
                     {% if memory.file_type == 'image' %}
                         <img src="{{ url_for('static', filename='uploads/' ~ memory.file_name) }}" class="img-fluid" alt="Image">

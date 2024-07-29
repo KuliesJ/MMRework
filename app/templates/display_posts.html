@@ -111,13 +111,14 @@
                 
 
                 {% if current_user.is_authenticated %}
-                    <form method="POST" action="{{ url_for('main.editPosts') }}" class="edit-delete-form mt-4">
-                        <input type="hidden" name="post_id" value="{{ post.id }}">
-                        <button type="submit" name="action" value="edit" class="btn btn-primary btn-sm me-2" style="border-radius: 5px;">Edit</button>
-                        <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm me-2" style="border-radius: 5px;">Delete</button>
-                        <button type="submit" name="action" value="move_up" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Up</button>
-                        <button type="submit" name="action" value="move_down" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Down</button>
-                    </form>
+                <form method="POST" action="{{ url_for('main.edit_posts') }}" class="edit-delete-form mt-4">
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <button type="submit" name="action" value="edit" class="btn btn-primary btn-sm me-2" style="border-radius: 5px;">Edit</button>
+                    <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm me-2" style="border-radius: 5px;">Delete</button>
+                    <button type="submit" name="action" value="move_up" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Up</button>
+                    <button type="submit" name="action" value="move_down" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Down</button>
+                </form>
+                
                 {% endif %}
             </div>
         </div>
