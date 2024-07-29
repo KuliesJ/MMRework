@@ -5,6 +5,92 @@
 {% block content %}
 <div class="container">
     <h1 class="my-4">{{ title }}</h1>
+    {% if title == "How to Help" %}
+    <div class="card mt-4" style="border: 2px solid #ccc; border-radius: 5px; padding: 20px;">
+        <div class="card-body">
+            <h3 class="card-title">Download Documents</h3>
+            <a href="{{ url_for('static', filename='documents/ApplicationMinisterialResolutionDonation.doc') }}" class="btn btn-custom mt-2" style="display: block; margin-bottom: 10px; background-color: #a45f24; color: #ffffff; border: none; border-radius: 5px; padding: 10px 15px; text-decoration: none;">Application Ministerial Resolution Donation</a>
+            <a href="{{ url_for('static', filename='documents/DS021-2008-EF-28905-English.pdf') }}" class="btn btn-custom mt-2" style="display: block; margin-bottom: 10px; background-color: #a45f24; color: #ffffff; border: none; border-radius: 5px; padding: 10px 15px; text-decoration: none;">DS021-2008-EF-28905-English</a>
+            <a href="{{ url_for('static', filename='documents/ModeloCartaDonacion.pdf') }}" class="btn btn-custom mt-2" style="display: block; margin-bottom: 10px; background-color: #a45f24; color: #ffffff; border: none; border-radius: 5px; padding: 10px 15px; text-decoration: none;">Modelo Carta Donacion</a>
+        </div>
+    </div>
+    <br>
+
+
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <div style="border: 2px solid #ccc; border-radius: 5px; padding: 20px;">
+                            <h2 class="card-title">Donate Online</h2>
+                            <p class="card-text">Please join our mission efforts and make your tax deductible donation using PayPal by clicking the button below.</p>
+                            <div class="text-center">
+                                <a href="https://www.paypal.com/donate?token=45c399PDjh5R_dyrlszNZrwIoGZDZDQdQEsHcMEn7-ntYD1uwFHHcxDFuowUVyogvobnyJxDMlf8jmq5" target="_blank" style="display: inline-block; border: 2px solid #000000; border-radius: 5px; padding: 10px;">
+                                    <img src="{{ url_for('static', filename='images/donate.png') }}" style="max-width: 100%; height: auto;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+        
+                <div class="card mb-4">
+                    <div class="card-body text-center"> <!-- Añadido text-center para centrar el contenido -->
+                        <div style="border: 2px solid #ccc; border-radius: 5px; padding: 20px;">
+                            <h2 class="card-title">Mail your donation</h2>
+                            <p class="card-text">Denise McNeely (c/o CLM)</p>
+                            <p class="card-text">6251 W. Alamo Dr.</p>
+                            <p class="card-text">Littleton, CO, 80123</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body text-center"> <!-- Añadido text-center para centrar el contenido -->
+                        <div style="border: 2px solid #ccc; border-radius: 5px; padding: 20px;">
+                            <h2 class="card-title">Make checks/money orders to:</h2>
+                            <p class="card-text">Christian Life Movement</p>
+                            <p class="card-text">Write a Memo on the check: "(specify cause)"</p>
+                            
+                            <h2 class="card-title mt-4">MAIL TO:</h2>
+                            <p class="card-text">Denise McNeely (c/o Medical Missions)</p>
+                            <p class="card-text">6251 W. Alamo Dr.</p>
+                            <p class="card-text">Littleton, CO, 80123</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <div style="border: 2px solid #ccc; border-radius: 5px; padding: 20px;">
+                            <h2 class="card-title">Non-Monetary Donations</h2>
+                            <p class="card-text text-justify">(We discourage material donations for emergency cases)</p>
+                            <p class="card-text text-justify">Below is the basic information on current Peruvian legislation about sending non-monetary donations to Peru:</p>
+                            <ul class="card-text" style="padding-left: 0;">
+                                <li style="margin-bottom: 10px; list-style-type: none; text-align: left;"><i class="bi bi-dot"></i> <a href="/donation_requirements.html">Donation Requirements for Missions Traveling to Peru (English)<br>
+                                    Article Nº 14 of the Peruvian Supreme Decree No. 021-2008-EF</a></li>
+                                <li style="margin-bottom: 10px; list-style-type: none; text-align: left;"><i class="bi bi-dot"></i> <a href="{{ url_for('static', filename='documents/DS021-2008-EF-28905-English.pdf') }}" download="DS021-2008-EF-28905-English.pdf">Law of Facilitation of the Dispatch of Donated Merchandise Originated in Foreign Nations - Regulation of the Law Nº 28905 (English)</a></li>
+                                <li style="margin-bottom: 10px; list-style-type: none; text-align: left;"><i class="bi bi-dot"></i> <a href="{{ url_for('static', filename='documents/ModeloCartaDonacion.pdf') }}" download="ModeloCartaDonacion.pdf">Model of Donation Letter (Spanish)</a> (This document must be submitted by the entity sending the donation and written in Spanish)</li>
+                                <li style="margin-bottom: 10px; list-style-type: none; text-align: left;"><i class="bi bi-dot"></i> <a href="{{ url_for('static', filename='documents/ApplicationMinisterialResolutionDonation.doc') }}" download="ApplicationMinisterialResolutionDonation.doc">Application Form for Obtaining a Ministerial Resolution to Approve Foreign Donations (English)</a> (This document must be submitted by the Peruvian entity receiving the donation and written in Spanish)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body text-center"> <!-- Añadido text-center para centrar el contenido -->
+                        <div style="border: 2px solid #ccc; border-radius: 5px; padding: 20px;">
+                            <h2 class="card-title">Other references</h2>
+                            <ul class="card-text" style="padding-left: 0;">
+                                <li style="margin-bottom: 10px; list-style-type: none; text-align: left;">
+                                    <a href="http://www.aduanet.gob.pe/orientacAduana/index.html" target="_blank"><i class="bi bi-dot"></i>Orientación Aduanera (SUNAT)</a> (Official Peruvian Web Site)
+                                </li>
+                                <li style="margin-bottom: 10px; list-style-type: none; text-align: left;">
+                                    <a href="https://www.usig.org/#General_Legal_Forms" target="_blank"><i class="bi bi-dot"></i>Information about Peru Non-for-Profit Organizations<br>United States International Grantmaking (USIG)</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+    {% endif %}
     {% for post in posts %}
     <div class="card mb-4">
         <div class="card-body text-center">
@@ -21,9 +107,11 @@
                 {% if post.image %}
                     <img src="{{ url_for('static', filename='uploads/' ~ post.image) }}" class="img-fluid mb-3 rounded" alt="Image"> <!-- Image -->
                 {% endif %}
+
                 
+
                 {% if current_user.is_authenticated %}
-                    <form method="POST" action="{{ url_for('main.editPosts') }}" class="edit-delete-form">
+                    <form method="POST" action="{{ url_for('main.editPosts') }}" class="edit-delete-form mt-4">
                         <input type="hidden" name="post_id" value="{{ post.id }}">
                         <button type="submit" name="action" value="edit" class="btn btn-primary btn-sm me-2" style="border-radius: 5px;">Edit</button>
                         <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm me-2" style="border-radius: 5px;">Delete</button>
