@@ -21,6 +21,7 @@ def about():
 @main.route('/goals_and_services')
 def goalsServices():
     posts = Post.get_posts_by_section("goals_and_services")
+    print(posts)
     return render_template("display_posts.html", title="Goals and Services", posts=posts)
 
 @main.route('/next_mission_trip')
@@ -87,7 +88,8 @@ def create_block():
         if image:
             image_filename = secure_filename(image.filename)
             print(image_filename)
-            image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], image_filename))
+            image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_filename)
+            image.save(image_path)
 
         # Aquí puedes guardar el bloque en la base de datos
         new_block = Post(section=section, title=title, subtitle=subtitle, content=content, image=image_filename, user_id=current_user.id)

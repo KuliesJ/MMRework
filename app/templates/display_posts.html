@@ -3,40 +3,37 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-
-    
-
-    <div class="container">
-        <h1 class="my-4">{{ title }}</h1>
-        {% for post in posts %}
-        <div class="card mb-4">
-            <div class="card-body text-center">
-                <div style="border: 2px solid #ccc; border-radius: 5px; padding: 20px;">
-                    {% if post.title %}
-                        <h2 class="card-title">{{ post.title }}</h2> <!-- Title -->
-                    {% endif %}
-                    {% if post.subtitle %}
-                        <h3 class="card-subtitle mb-2 text-muted">{{ post.subtitle }}</h3> <!-- Subtitle -->
-                    {% endif %}
-                    {% if post.content %}
-                        <p class="card-text">{{ post.content }}</p> <!-- Content -->
-                    {% endif %}
-                    {% if post.image %}
-                        <img src="{{ url_for('static', filename=post.image[7:].replace('\\', '/')) }}" class="img-fluid mb-3" alt="Post Image"> <!-- Image -->
-                    {% endif %}
-                    
-                    {% if 'user_id' in session %}
-                        <form method="POST" action="{{ url_for('editPosts') }}" class="edit-delete-form">
-                            <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Aquí post.id debe ser el ID del post -->
-                            <button type="submit" name="action" value="edit" class="btn btn-primary btn-sm me-2" style="border-radius: 5px;">Edit</button>
-                            <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm me-2" style="border-radius: 5px;">Delete</button>
-                            <button type="submit" name="action" value="move_up" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Up</button>
-                            <button type="submit" name="action" value="move_down" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Down</button>
-                        </form>
-                    {% endif %}
-                </div>
+<div class="container">
+    <h1 class="my-4">{{ title }}</h1>
+    {% for post in posts %}
+    <div class="card mb-4">
+        <div class="card-body text-center">
+            <div style="border: 2px solid #ccc; border-radius: 5px; padding: 20px;">
+                {% if post.title %}
+                    <h2 class="card-title">{{ post.title }}</h2> <!-- Title -->
+                {% endif %}
+                {% if post.subtitle %}
+                    <h3 class="card-subtitle mb-2 text-muted">{{ post.subtitle }}</h3> <!-- Subtitle -->
+                {% endif %}
+                {% if post.content %}
+                    <p class="card-text">{{ post.content }}</p> <!-- Content -->
+                {% endif %}
+                {% if post.image %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ post.image) }}" class="img-fluid mb-3" alt="Image"> <!-- Image -->
+                {% endif %}
+                
+                {% if 'user_id' in session %}
+                    <form method="POST" action="{{ url_for('editPosts') }}" class="edit-delete-form">
+                        <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Aquí post.id debe ser el ID del post -->
+                        <button type="submit" name="action" value="edit" class="btn btn-primary btn-sm me-2" style="border-radius: 5px;">Edit</button>
+                        <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm me-2" style="border-radius: 5px;">Delete</button>
+                        <button type="submit" name="action" value="move_up" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Up</button>
+                        <button type="submit" name="action" value="move_down" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Down</button>
+                    </form>
+                {% endif %}
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 {% endblock %}

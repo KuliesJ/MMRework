@@ -15,7 +15,7 @@ def create_app():
     migrate.init_app(app, db)
 
     # Configuración para las rutas de subida de archivos
-    app.config['UPLOAD_FOLDER'] = 'static/uploads'
+    app.config['UPLOAD_FOLDER'] = 'app/static/uploads'
 
     # Asegúrate de que la carpeta de subida exista
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
