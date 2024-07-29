@@ -22,10 +22,12 @@
                     <img src="{{ url_for('static', filename='uploads/' ~ post.image) }}" class="img-fluid mb-3" alt="Image"> <!-- Image -->
                 {% endif %}
                 
-                {% if 'user_id' in session %}
-                    <form method="POST" action="{{ url_for('editPosts') }}" class="edit-delete-form">
-                        <input type="hidden" name="post_id" value="{{ post.id }}"> <!-- Aquí post.id debe ser el ID del post -->
-                        <button type="submit" name="action" value="edit" class="btn btn-primary btn-sm me-2" style="border-radius: 5px;">Edit</button>
+                {% if current_user.is_authenticated %}
+                    <form method="GET" action="{{ url_for('main.create_block', post_id=post.id) }}" class="edit-delete-form">
+                        <button type="submit" class="btn btn-primary btn-sm me-2" style="border-radius: 5px;">Edit</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('main.editPosts') }}" class="edit-delete-form">
+                        <input type="hidden" name="post_id" value="{{ post.id }}">
                         <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm me-2" style="border-radius: 5px;">Delete</button>
                         <button type="submit" name="action" value="move_up" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Up</button>
                         <button type="submit" name="action" value="move_down" class="btn btn-secondary btn-sm me-2" style="border-radius: 5px;">Move Down</button>

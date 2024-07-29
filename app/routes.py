@@ -8,6 +8,12 @@ from app import db  # Asegúrate de que esto está importado si estás usando SQ
 
 main = Blueprint('main', __name__)
 
+# ODDITIES
+
+@main.app_errorhandler(404)
+def not_found(error):
+    return render_template('not_found.html'), 404
+
 # PRINCIPAL ROUTES
 
 @main.route('/')
@@ -67,8 +73,13 @@ def previousMissions():
 # BLOCK MANAGERS
 
 @main.route('/create_block', methods=['GET', 'POST'])
+@main.route('/create_block/<int:post_id>', methods=['GET', 'POST'])
 @login_required
-def create_block():
+def create_block(post_id=None):
+    post = None
+    if post_id:
+        post = Post.query.get(post_id)
+
     if request.method == 'POST':
         section = request.form['section']
         title = request.form.get('title', '')
@@ -78,29 +89,54 @@ def create_block():
 
         if not section:
             flash('Section is required.')
-            return render_template('create_block.html', error='Section is required.')
+            return render_template('create_block.html', post=post, error='Section is required.')
 
         if not title and not subtitle and not content and not image:
             flash('At least one of Title, Subtitle, Content, or Image is required.')
-            return render_template('create_block.html', error='At least one of Title, Subtitle, Content, or Image is required.')
+            return render_template('create_block.html', post=post, error='At least one of Title, Subtitle, Content, or Image is required.')
 
-        image_filename = None
+        image_filename = post.image if post and post.image else None
         if image:
             image_filename = secure_filename(image.filename)
-            print(image_filename)
             image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_filename)
             image.save(image_path)
 
-        # Aquí puedes guardar el bloque en la base de datos
-        new_block = Post(section=section, title=title, subtitle=subtitle, content=content, image=image_filename, user_id=current_user.id)
-        db.session.add(new_block)
+        if post:
+            post.section = section
+            post.title = title
+            post.subtitle = subtitle
+            post.content = content
+            post.image = image_filename
+        else:
+            post = Post(section=section, title=title, subtitle=subtitle, content=content, image=image_filename, user_id=current_user.id)
+            db.session.add(post)
+
         db.session.commit()
+        flash('Block created successfully!' if not post_id else 'Block updated successfully!')
+        return redirect(url_for('main.create_block'))
 
-        flash('Block created successfully!')
-        return redirect(url_for('main.create_block'))  # Redirige a la misma página o a otra según tu lógica
+    return render_template('block_form.html', post=post)
 
-    return render_template('block_form.html')
+@main.route('/editPosts', methods=['POST'])
+@login_required
+def editPosts():
+    post_id = request.form.get('post_id')
+    action = request.form.get('action')
 
+    if action == 'delete':
+        post = Post.query.get(post_id)
+        if post:
+            db.session.delete(post)
+            db.session.commit()
+            flash('Post deleted successfully!')
+    elif action == 'move_up':
+        # Lógica para mover el post hacia arriba
+        pass
+    elif action == 'move_down':
+        # Lógica para mover el post hacia abajo
+        pass
+
+    return redirect(url_for('main.home'))
 
 
 @main.route('/add_section', methods=['GET', 'POST'])
@@ -159,7 +195,7 @@ def add_image_or_video():
             db.session.commit()
             
             flash('File uploaded successfully!')
-            return redirect(url_for('main.add_image_or_video'))
+            return redirect(url_for('main.home'))
         else:
             flash('Invalid file format. Only JPG, JPEG, PNG, and MP4 files are allowed.')
     
