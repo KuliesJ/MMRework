@@ -26,7 +26,7 @@ def about():
 
 @main.route('/goals_and_services')
 def goalsServices():
-    posts = Post.get_posts_by_section("goals_and_services")
+    posts = Post.get_posts_by_section('goals_and_services')
     print(posts)
     return render_template("display_posts.html", title="Goals and Services", posts=posts)
 
@@ -108,7 +108,11 @@ def create_block(post_id=None):
             post.content = content
             post.image = image_filename
         else:
-            post = Post(section=section, title=title, subtitle=subtitle, content=content, image=image_filename, user_id=current_user.id)
+            # Obtener el valor máximo actual de 'order' en la sección
+            max_order = db.session.query(db.func.max(Post.order)).filter_by(section=section).scalar()
+            new_order = (max_order or 0) + 1
+
+            post = Post(section=section, title=title, subtitle=subtitle, content=content, image=image_filename, user_id=current_user.id, order=new_order)
             db.session.add(post)
 
         db.session.commit()
@@ -117,26 +121,46 @@ def create_block(post_id=None):
 
     return render_template('block_form.html', post=post)
 
+
 @main.route('/editPosts', methods=['POST'])
 @login_required
 def editPosts():
     post_id = request.form.get('post_id')
     action = request.form.get('action')
+    post = Post.query.get(post_id)
+
+    if not post:
+        flash('Post not found.')
+        return redirect(url_for('main.home'))
 
     if action == 'delete':
-        post = Post.query.get(post_id)
-        if post:
-            db.session.delete(post)
-            db.session.commit()
-            flash('Post deleted successfully!')
-    elif action == 'move_up':
-        # Lógica para mover el post hacia arriba
-        pass
-    elif action == 'move_down':
-        # Lógica para mover el post hacia abajo
-        pass
+        db.session.delete(post)
+        db.session.commit()
+        flash('Post deleted successfully!')
 
-    return redirect(url_for('main.home'))
+    elif action in ['move_up', 'move_down']:
+        current_order = post.order
+        section = post.section
+
+        if action == 'move_up':
+            new_order = current_order - 1
+        elif action == 'move_down':
+            new_order = current_order + 1
+
+        # Find the post to swap with
+        other_post = Post.query.filter_by(section=section, order=new_order).first()
+
+        if other_post:
+            # Swap orders
+            post.order = new_order
+            other_post.order = current_order
+            db.session.commit()
+            flash(f'Post {action.replace("_", " ")} successfully!')
+        else:
+            flash(f'Cannot {action.replace("_", " ")}. No post to swap with.')
+
+    return redirect(request.referrer or url_for('main.home'))
+
 
 
 @main.route('/add_section', methods=['GET', 'POST'])

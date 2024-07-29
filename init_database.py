@@ -24,11 +24,6 @@ def init_database():
         db.session.commit()
 
         # Agregar posts de ejemplo con user_id
-        post1 = Post(section='goals_and_services', title='Our Goals', subtitle='What we aim for', content='We aim to make a difference...', image='path/to/image1.jpg', user_id=user1.id)
-        post2 = Post(section='next_mission', title='Upcoming Mission', subtitle='Details about the mission', content='We are preparing for our next mission...', image='path/to/image2.jpg', user_id=user2.id)
-
-        db.session.add(post1)
-        db.session.add(post2)
 
         # Agregar secciones de memoria de ejemplo
         section1 = MemorySection(sectionName='Travel Memories')

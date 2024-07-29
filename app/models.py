@@ -18,12 +18,13 @@ class User(db.Model, UserMixin):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    section = db.Column(db.String(150))
-    title = db.Column(db.String(150))
-    subtitle = db.Column(db.String(150))
-    content = db.Column(db.String(200))
-    image = db.Column(db.String(200))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Relación con User
+    section = db.Column(db.String(50), nullable=False)
+    title = db.Column(db.String(100), nullable=True)
+    subtitle = db.Column(db.String(100), nullable=True)
+    content = db.Column(db.Text, nullable=True)
+    image = db.Column(db.String(100), nullable=True)
+    order = db.Column(db.Integer, default=1)  # Campo de orden con valor predeterminado
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     @classmethod
     def get_all_posts(cls):
@@ -31,7 +32,7 @@ class Post(db.Model):
 
     @classmethod
     def get_posts_by_section(cls, section):
-        return cls.query.filter_by(section=section).all()
+        return cls.query.filter_by(section=section).order_by(cls.order).all()
 
 class MemorySection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
