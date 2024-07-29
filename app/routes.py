@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, current_app
-from app.models import Post, MemorySection, Memory, User  # Asegúrate de que la ruta al modelo sea correcta
+from app.models import Post, MemorySection, Memory, User, MemorySection, Memory  # Asegúrate de que la ruta al modelo sea correcta
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -98,9 +98,32 @@ def create_block():
 
     return render_template('block_form.html')
 
+
+
 @main.route('/add_section', methods=['GET', 'POST'])
 @login_required
 def addSection():
+    if request.method == 'POST':
+        title = request.form.get('title', '').strip()
+
+        if not title:
+            flash('Section name is required.')
+            return render_template('create_block.html', error='Section name is required.')
+
+        # Verificar si la sección ya existe
+        existing_section = MemorySection.query.filter_by(sectionName=title).first()
+        if existing_section:
+            flash('Section already exists.')
+            return render_template('create_block.html', error='Section already exists.')
+
+        # Crear una nueva sección
+        new_section = MemorySection(sectionName=title)
+        db.session.add(new_section)
+        db.session.commit()
+
+        flash('Section created successfully!')
+        return redirect(url_for('main.home'))
+
     return render_template('section_form.html')
 
 @main.route('/add_image_or_video', methods=['GET', 'POST'])
